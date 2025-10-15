@@ -63,7 +63,7 @@ TitanMart ensures safety through structured payments, verified campus authentica
 
 ---
 
-## ☁️ Deployment Overview
+## Deployment Overview
 
 1. **Frontend (iOS App)**  
    - Built and deployed via **Xcode** using **SwiftUI**.  
