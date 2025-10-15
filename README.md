@@ -84,7 +84,7 @@ TitanMart ensures safety through structured payments, verified campus authentica
 
 ---
 
-## 🧠 Project Deliverables
+## Project Deliverables
 
 - **Fully functional iOS prototype**  
   - Product browsing, shopping cart, and checkout flow.  
