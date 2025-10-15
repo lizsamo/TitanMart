@@ -1,4 +1,4 @@
-# TitanMart
+# 🐘 TitanMart
 
 **A secure campus marketplace for CSUF students.**
 
