@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import StripePaymentSheet
+@preconcurrency import StripePaymentSheet
 
 class PaymentService: ObservableObject {
     static let shared = PaymentService()

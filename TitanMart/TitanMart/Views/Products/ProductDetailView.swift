@@ -15,24 +15,60 @@ struct ProductDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                // Hero Product Image with Gradient
+                // Hero Product Image
                 ZStack(alignment: .bottom) {
-                    LinearGradient(
-                        colors: [Color.titanBlue.opacity(0.4), Color.titanOrange.opacity(0.3)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                    .frame(height: 350)
-                    .overlay(
-                        VStack(spacing: 12) {
+                        
+                    if let firstImageURL = product.imageURLs.first,
+                        let url = URL(string: firstImageURL) {
+
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(maxWidth: .infinity, maxHeight: 350)
+
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: UIScreen.main.bounds.width, height: 350)
+                                    .clipped()
+
+                            case .failure:
+                                // fallback gradient if image fails
+                                LinearGradient(
+                                    colors: [Color.titanBlue.opacity(0.4),
+                                                Color.titanOrange.opacity(0.3)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                                .frame(height: 350)
+                                .overlay(
+                                    Image(systemName: categoryIcon(for: product.category))
+                                        .font(.system(size: 100))
+                                        .foregroundColor(.white)
+                                )
+
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+
+                    } else {
+                        // fallback gradient if no images exist
+                        LinearGradient(
+                            colors: [Color.titanBlue.opacity(0.4),
+                                        Color.titanOrange.opacity(0.3)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        .frame(height: 350)
+                        .overlay(
                             Image(systemName: categoryIcon(for: product.category))
                                 .font(.system(size: 100))
                                 .foregroundColor(.white)
-                            Text(product.category.rawValue)
-                                .font(.headline)
-                                .foregroundColor(.white.opacity(0.9))
-                        }
-                    )
+                        )
+                    }
 
                     // Condition Badge
                     HStack {
