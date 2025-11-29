@@ -133,6 +133,31 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    // If user is not verified, generate and send new verification code
+    if (!user.isEmailVerified) {
+      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      // Update user with new verification code
+      await docClient.send(new UpdateCommand({
+        TableName: process.env.DYNAMODB_USERS_TABLE,
+        Key: { csufEmail: user.csufEmail },
+        UpdateExpression: 'SET verificationCode = :code',
+        ExpressionAttributeValues: {
+          ':code': verificationCode
+        }
+      }));
+
+      // Send verification email
+      try {
+        await sendVerificationEmail(user.csufEmail, verificationCode);
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+        // Continue login even if email fails
+      }
+
+      user.verificationCode = verificationCode;
+    }
+
     // Generate JWT (use csufEmail as identifier since it's the primary key)
     const token = jwt.sign(
       {
@@ -313,6 +338,93 @@ router.post('/reset-password', async (req, res) => {
   } catch (error) {
     console.error('Reset password error:', error);
     res.status(500).json({ message: 'Server error during password reset' });
+  }
+});
+
+// Resend verification email
+router.post('/resend-verification', async (req, res) => {
+  try {
+    const { csufEmail } = req.body;
+
+    if (!csufEmail) {
+      return res.status(400).json({ message: 'csufEmail required' });
+    }
+
+    // Get user by csufEmail
+    const result = await docClient.send(new GetCommand({
+      TableName: process.env.DYNAMODB_USERS_TABLE,
+      Key: { csufEmail: csufEmail.toLowerCase() }
+    }));
+
+    if (!result.Item) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user = result.Item;
+
+    if (user.isEmailVerified) {
+      return res.status(400).json({ message: 'Email already verified' });
+    }
+
+    // Generate new verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Update user with new verification code
+    await docClient.send(new UpdateCommand({
+      TableName: process.env.DYNAMODB_USERS_TABLE,
+      Key: { csufEmail: csufEmail.toLowerCase() },
+      UpdateExpression: 'SET verificationCode = :code',
+      ExpressionAttributeValues: {
+        ':code': verificationCode
+      }
+    }));
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(csufEmail, verificationCode);
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      return res.status(500).json({ message: 'Failed to send verification email' });
+    }
+
+    res.json({ message: 'Verification code sent to your CSUF email' });
+  } catch (error) {
+    console.error('Resend verification error:', error);
+    res.status(500).json({ message: 'Server error during resend verification' });
+  }
+});
+
+// Get user profile by csufEmail
+router.get('/profile/:csufEmail', async (req, res) => {
+  try {
+    const { csufEmail } = req.params;
+
+    if (!csufEmail) {
+      return res.status(400).json({ message: 'csufEmail required' });
+    }
+
+    // Get user by csufEmail
+    const result = await docClient.send(new GetCommand({
+      TableName: process.env.DYNAMODB_USERS_TABLE,
+      Key: { csufEmail: csufEmail.toLowerCase() }
+    }));
+
+    if (!result.Item) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user = result.Item;
+
+    // Remove sensitive data
+    delete user.password;
+    delete user.verificationCode;
+    delete user.passwordResetCode;
+    delete user.resetCodeExpiry;
+
+    res.json(user);
+  } catch (error) {
+    console.error('Get profile error:', error);
+    res.status(500).json({ message: 'Server error fetching profile' });
   }
 });
 

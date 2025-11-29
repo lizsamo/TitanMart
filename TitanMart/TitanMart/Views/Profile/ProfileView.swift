@@ -10,11 +10,63 @@ import SwiftUI
 struct ProfileView: View {
     @StateObject private var authService = AuthService.shared
     @StateObject private var orderViewModel = OrderViewModel()
+    @State private var isRefreshing = false
+    @State private var showingVerification = false
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: Spacing.lg) {
+                    // Email Verification Banner (if not verified)
+                    if let user = authService.currentUser, !user.isEmailVerified {
+                        VStack(spacing: Spacing.md) {
+                            HStack(spacing: Spacing.sm) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.warning)
+                                    .font(.title2)
+
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Email Not Verified")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+
+                                    Text("Please verify your CSUF email to access all features")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+
+                                Spacer()
+                            }
+
+                            Button(action: {
+                                Task {
+                                    do {
+                                        if let userEmail = authService.currentUser?.csufEmail {
+                                            try await authService.resendVerificationCode(csufEmail: userEmail)
+                                        }
+                                    } catch {
+                                        print("Failed to send verification code: \(error)")
+                                    }
+                                    showingVerification = true
+                                }
+                            }) {
+                                Text("Verify Now")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .background(Color.blue)
+                                    .cornerRadius(8)
+                            }
+                        }
+                        .padding()
+                        .background(Color.warning.opacity(0.1))
+                        .cornerRadius(12)
+                        .padding(.horizontal)
+                        .padding(.top)
+                    }
+
                     // Enhanced User Profile Header
                     if let user = authService.currentUser {
                         VStack(spacing: Spacing.lg) {
@@ -159,7 +211,24 @@ struct ProfileView: View {
                     .padding()
                 }
             }
+            .refreshable {
+                await refreshProfile()
+            }
             .navigationBarHidden(true)
+            .fullScreenCover(isPresented: $showingVerification) {
+                if let user = authService.currentUser {
+                    EmailVerificationView(csufEmail: user.csufEmail)
+                }
+            }
+        }
+    }
+
+    private func refreshProfile() async {
+        do {
+            try await authService.refreshUserProfile()
+        } catch {
+            // Silently fail - user will see the existing data
+            print("Failed to refresh profile: \(error.localizedDescription)")
         }
     }
 }
