@@ -144,6 +144,22 @@ class APIService {
         return try await request(endpoint: "/auth/verify-email", method: "POST", body: jsonData)
     }
 
+    func resendVerificationCode(csufEmail: String) async throws -> String {
+        struct ResendResponse: Decodable {
+            let message: String
+        }
+
+        let body = ["csufEmail": csufEmail]
+        let jsonData = try JSONEncoder().encode(body)
+        let response: ResendResponse = try await request(endpoint: "/auth/resend-verification", method: "POST", body: jsonData)
+        return response.message
+    }
+
+    func getUserProfile(csufEmail: String) async throws -> User {
+        let encodedEmail = csufEmail.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? csufEmail
+        return try await request(endpoint: "/auth/profile/\(encodedEmail)")
+    }
+
     func forgotPassword(username: String) async throws -> String {
         struct ForgotPasswordResponse: Decodable {
             let message: String
