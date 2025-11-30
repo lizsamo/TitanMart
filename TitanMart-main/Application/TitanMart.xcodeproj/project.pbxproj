@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C047E5842EAB5FDA00F2D589 /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = C047E5832EAB5FDA00F2D589 /* StripePaymentSheet */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C03016DA2EA9630E002FAC76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C03016C42EA9630D002FAC76 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C03016CB2EA9630D002FAC76;
+			remoteInfo = TitanMart;
+		};
+		C03016E42EA9630E002FAC76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C03016C42EA9630D002FAC76 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C03016CB2EA9630D002FAC76;
+			remoteInfo = TitanMart;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C03016CC2EA9630D002FAC76 /* TitanMart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TitanMart.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C03016D92EA9630E002FAC76 /* TitanMartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TitanMartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C03016E32EA9630E002FAC76 /* TitanMartUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TitanMartUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C03016CE2EA9630D002FAC76 /* TitanMart */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TitanMart;
+			sourceTree = "<group>";
+		};
+		C03016DC2EA9630E002FAC76 /* TitanMartTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TitanMartTests;
+			sourceTree = "<group>";
+		};
+		C03016E62EA9630E002FAC76 /* TitanMartUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TitanMartUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C03016C92EA9630D002FAC76 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C047E5842EAB5FDA00F2D589 /* StripePaymentSheet in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C03016D62EA9630E002FAC76 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C03016E02EA9630E002FAC76 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C03016C32EA9630D002FAC76 = {
+			isa = PBXGroup;
+			children = (
+				C03016CE2EA9630D002FAC76 /* TitanMart */,
+				C03016DC2EA9630E002FAC76 /* TitanMartTests */,
+				C03016E62EA9630E002FAC76 /* TitanMartUITests */,
+				C047E5822EAB5FDA00F2D589 /* Frameworks */,
+				C03016CD2EA9630D002FAC76 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C03016CD2EA9630D002FAC76 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C03016CC2EA9630D002FAC76 /* TitanMart.app */,
+				C03016D92EA9630E002FAC76 /* TitanMartTests.xctest */,
+				C03016E32EA9630E002FAC76 /* TitanMartUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C047E5822EAB5FDA00F2D589 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C03016CB2EA9630D002FAC76 /* TitanMart */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C03016ED2EA9630E002FAC76 /* Build configuration list for PBXNativeTarget "TitanMart" */;
+			buildPhases = (
+				C03016C82EA9630D002FAC76 /* Sources */,
+				C03016C92EA9630D002FAC76 /* Frameworks */,
+				C03016CA2EA9630D002FAC76 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C03016CE2EA9630D002FAC76 /* TitanMart */,
+			);
+			name = TitanMart;
+			packageProductDependencies = (
+				C047E5832EAB5FDA00F2D589 /* StripePaymentSheet */,
+			);
+			productName = TitanMart;
+			productReference = C03016CC2EA9630D002FAC76 /* TitanMart.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C03016D82EA9630E002FAC76 /* TitanMartTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C03016F02EA9630E002FAC76 /* Build configuration list for PBXNativeTarget "TitanMartTests" */;
+			buildPhases = (
+				C03016D52EA9630E002FAC76 /* Sources */,
+				C03016D62EA9630E002FAC76 /* Frameworks */,
+				C03016D72EA9630E002FAC76 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C03016DB2EA9630E002FAC76 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C03016DC2EA9630E002FAC76 /* TitanMartTests */,
+			);
+			name = TitanMartTests;
+			packageProductDependencies = (
+			);
+			productName = TitanMartTests;
+			productReference = C03016D92EA9630E002FAC76 /* TitanMartTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C03016E22EA9630E002FAC76 /* TitanMartUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C03016F32EA9630E002FAC76 /* Build configuration list for PBXNativeTarget "TitanMartUITests" */;
+			buildPhases = (
+				C03016DF2EA9630E002FAC76 /* Sources */,
+				C03016E02EA9630E002FAC76 /* Frameworks */,
+				C03016E12EA9630E002FAC76 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C03016E52EA9630E002FAC76 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C03016E62EA9630E002FAC76 /* TitanMartUITests */,
+			);
+			name = TitanMartUITests;
+			packageProductDependencies = (
+			);
+			productName = TitanMartUITests;
+			productReference = C03016E32EA9630E002FAC76 /* TitanMartUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C03016C42EA9630D002FAC76 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					C03016CB2EA9630D002FAC76 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					C03016D82EA9630E002FAC76 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = C03016CB2EA9630D002FAC76;
+					};
+					C03016E22EA9630E002FAC76 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = C03016CB2EA9630D002FAC76;
+					};
+				};
+			};
+			buildConfigurationList = C03016C72EA9630D002FAC76 /* Build configuration list for PBXProject "TitanMart" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C03016C32EA9630D002FAC76;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C047E57F2EAB5B4700F2D589 /* XCRemoteSwiftPackageReference "stripe-ios" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C03016CD2EA9630D002FAC76 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C03016CB2EA9630D002FAC76 /* TitanMart */,
+				C03016D82EA9630E002FAC76 /* TitanMartTests */,
+				C03016E22EA9630E002FAC76 /* TitanMartUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C03016CA2EA9630D002FAC76 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C03016D72EA9630E002FAC76 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C03016E12EA9630E002FAC76 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C03016C82EA9630D002FAC76 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C03016D52EA9630E002FAC76 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C03016DF2EA9630E002FAC76 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C03016DB2EA9630E002FAC76 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C03016CB2EA9630D002FAC76 /* TitanMart */;
+			targetProxy = C03016DA2EA9630E002FAC76 /* PBXContainerItemProxy */;
+		};
+		C03016E52EA9630E002FAC76 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C03016CB2EA9630D002FAC76 /* TitanMart */;
+			targetProxy = C03016E42EA9630E002FAC76 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C03016EB2EA9630E002FAC76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C03016EC2EA9630E002FAC76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C03016EE2EA9630E002FAC76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizsamontoya.TitanMart;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C03016EF2EA9630E002FAC76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizsamontoya.TitanMart;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C03016F12EA9630E002FAC76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizsamontoya.TitanMartTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TitanMart.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TitanMart";
+			};
+			name = Debug;
+		};
+		C03016F22EA9630E002FAC76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizsamontoya.TitanMartTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TitanMart.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TitanMart";
+			};
+			name = Release;
+		};
+		C03016F42EA9630E002FAC76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizsamontoya.TitanMartUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TitanMart;
+			};
+			name = Debug;
+		};
+		C03016F52EA9630E002FAC76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elizsamontoya.TitanMartUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TitanMart;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C03016C72EA9630D002FAC76 /* Build configuration list for PBXProject "TitanMart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C03016EB2EA9630E002FAC76 /* Debug */,
+				C03016EC2EA9630E002FAC76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C03016ED2EA9630E002FAC76 /* Build configuration list for PBXNativeTarget "TitanMart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C03016EE2EA9630E002FAC76 /* Debug */,
+				C03016EF2EA9630E002FAC76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C03016F02EA9630E002FAC76 /* Build configuration list for PBXNativeTarget "TitanMartTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C03016F12EA9630E002FAC76 /* Debug */,
+				C03016F22EA9630E002FAC76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C03016F32EA9630E002FAC76 /* Build configuration list for PBXNativeTarget "TitanMartUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C03016F42EA9630E002FAC76 /* Debug */,
+				C03016F52EA9630E002FAC76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C047E57F2EAB5B4700F2D589 /* XCRemoteSwiftPackageReference "stripe-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stripe/stripe-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.24.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C047E5832EAB5FDA00F2D589 /* StripePaymentSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C047E57F2EAB5B4700F2D589 /* XCRemoteSwiftPackageReference "stripe-ios" */;
+			productName = StripePaymentSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C03016C42EA9630D002FAC76 /* Project object */;
+}

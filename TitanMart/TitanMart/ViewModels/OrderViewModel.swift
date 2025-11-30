@@ -55,4 +55,48 @@ class OrderViewModel: ObservableObject {
         orders.insert(createdOrder, at: 0)
         return createdOrder
     }
+
+    // MARK: - Review Functions
+    func canReview(orderId: String, reviewedUserId: String) async -> (canReview: Bool, reason: String?) {
+        guard let token = AuthService.shared.getToken() else {
+            return (false, "You must be logged in")
+        }
+
+        do {
+            let response = try await APIService.shared.canReview(
+                orderId: orderId,
+                reviewedUserId: reviewedUserId,
+                token: token
+            )
+            return (response.canReview, response.reason)
+        } catch {
+            return (false, error.localizedDescription)
+        }
+    }
+
+    func getOtherPartyUserId(for order: Order) -> String? {
+        guard let currentUserId = AuthService.shared.currentUser?.csufEmail else {
+            return nil
+        }
+
+        if order.buyerId == currentUserId {
+            return order.sellerId
+        } else if order.sellerId == currentUserId {
+            return order.buyerId
+        }
+        return nil
+    }
+
+    func getOtherPartyName(for order: Order) -> String? {
+        guard let currentUserId = AuthService.shared.currentUser?.csufEmail else {
+            return nil
+        }
+
+        if order.buyerId == currentUserId {
+            return order.sellerName
+        } else if order.sellerId == currentUserId {
+            return order.buyerName
+        }
+        return nil
+    }
 }

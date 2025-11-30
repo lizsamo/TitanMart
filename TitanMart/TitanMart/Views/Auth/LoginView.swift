@@ -15,6 +15,8 @@ struct LoginView: View {
     @State private var errorMessage: String?
     @State private var showingSignup = false
     @State private var showingForgotPassword = false
+    @State private var showingVerification = false
+    @State private var userEmailToVerify = ""
 
     var body: some View {
         NavigationView {
@@ -94,6 +96,9 @@ struct LoginView: View {
             .sheet(isPresented: $showingForgotPassword) {
                 ForgotPasswordView()
             }
+            .fullScreenCover(isPresented: $showingVerification) {
+                EmailVerificationView(csufEmail: userEmailToVerify)
+            }
         }
     }
 
@@ -104,10 +109,21 @@ struct LoginView: View {
         Task {
             do {
                 try await authService.login(username: username, password: password)
+
+                // Check if user needs to verify email
+                await MainActor.run {
+                    if let user = authService.currentUser, !user.isEmailVerified {
+                        userEmailToVerify = user.csufEmail
+                        showingVerification = true
+                    }
+                    isLoading = false
+                }
             } catch {
-                errorMessage = error.localizedDescription
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    isLoading = false
+                }
             }
-            isLoading = false
         }
     }
 }
