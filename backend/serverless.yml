@@ -15,6 +15,12 @@ provider:
     DYNAMODB_ORDERS_TABLE: ${self:service}-orders-${self:provider.stage}
     DYNAMODB_REVIEWS_TABLE: ${self:service}-reviews-${self:provider.stage}
     S3_BUCKET_NAME: ${self:service}-images-${self:provider.stage}
+    JWT_SECRET: ${env:JWT_SECRET}
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
+    STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
+    service: titanmart-api ////////////////////mightnot need
+    
+
 
   iam:
     role:
@@ -101,9 +107,26 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: buyerId
+            AttributeType: S
+          - AttributeName: sellerId
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: BuyerIndex
+            KeySchema:
+              - AttributeName: buyerId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: SellerIndex
+            KeySchema:
+              - AttributeName: sellerId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
 
     ReviewsTable:
       Type: AWS::DynamoDB::Table
@@ -113,9 +136,26 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: reviewedUserId
+            AttributeType: S
+          - AttributeName: orderId
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: ReviewedUserIndex
+            KeySchema:
+              - AttributeName: reviewedUserId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: OrderIndex
+            KeySchema:
+              - AttributeName: orderId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
 
     # S3 Bucket for images
     ImagesBucket:

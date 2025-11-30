@@ -14,10 +14,12 @@ router.post('/', authMiddleware, async (req, res) => {
     const order = {
       ...req.body,
       id: uuidv4(),
+      status: 'pending', /////////////////////////////////////////////////
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-
+    
+      
     // Create the order first
     await docClient.send(new PutCommand({
       TableName: process.env.DYNAMODB_ORDERS_TABLE,

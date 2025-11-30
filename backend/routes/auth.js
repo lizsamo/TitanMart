@@ -73,6 +73,7 @@ router.post('/register', async (req, res) => {
       fullName,
       isEmailVerified: false,
       verificationCode,
+      verificationCodeExpiry: Date.now() + 5 * 60 * 1000, // 5 minutes from now
       rating: 0,
       totalRatings: 0,
       createdAt: new Date().toISOString()
@@ -94,6 +95,7 @@ router.post('/register', async (req, res) => {
     // Remove sensitive data
     delete user.password;
     delete user.verificationCode;
+    delete user.verificationCodeExpiry;
 
     res.status(201).json(user);
   } catch (error) {
@@ -141,9 +143,10 @@ router.post('/login', async (req, res) => {
       await docClient.send(new UpdateCommand({
         TableName: process.env.DYNAMODB_USERS_TABLE,
         Key: { csufEmail: user.csufEmail },
-        UpdateExpression: 'SET verificationCode = :code',
+        UpdateExpression: 'SET verificationCode = :code, verificationCodeExpiry = :expiry',
         ExpressionAttributeValues: {
-          ':code': verificationCode
+          ':code': verificationCode,
+          ':expiry': Date.now() + 5 * 60 * 1000 // 5 minutes from now
         }
       }));
 
@@ -171,6 +174,7 @@ router.post('/login', async (req, res) => {
     // Remove sensitive data
     delete user.password;
     delete user.verificationCode;
+    delete user.verificationCodeExpiry;
 
     res.json({ user, token });
   } catch (error) {
@@ -208,11 +212,16 @@ router.post('/verify-email', async (req, res) => {
       return res.status(400).json({ message: 'Invalid verification code' });
     }
 
+    // Check if code has expired
+    if (!user.verificationCodeExpiry || Date.now() > user.verificationCodeExpiry) {
+      return res.status(400).json({ message: 'Verification code has expired. Please request a new code.' });
+    }
+
     // Update user
     await docClient.send(new UpdateCommand({
       TableName: process.env.DYNAMODB_USERS_TABLE,
       Key: { csufEmail: csufEmail.toLowerCase() },
-      UpdateExpression: 'SET isEmailVerified = :verified REMOVE verificationCode',
+      UpdateExpression: 'SET isEmailVerified = :verified REMOVE verificationCode, verificationCodeExpiry',
       ExpressionAttributeValues: {
         ':verified': true
       }
@@ -221,6 +230,7 @@ router.post('/verify-email', async (req, res) => {
     user.isEmailVerified = true;
     delete user.password;
     delete user.verificationCode;
+    delete user.verificationCodeExpiry;
 
     res.json(user);
   } catch (error) {
@@ -373,9 +383,10 @@ router.post('/resend-verification', async (req, res) => {
     await docClient.send(new UpdateCommand({
       TableName: process.env.DYNAMODB_USERS_TABLE,
       Key: { csufEmail: csufEmail.toLowerCase() },
-      UpdateExpression: 'SET verificationCode = :code',
+      UpdateExpression: 'SET verificationCode = :code, verificationCodeExpiry = :expiry',
       ExpressionAttributeValues: {
-        ':code': verificationCode
+        ':code': verificationCode,
+        ':expiry': Date.now() + 5 * 60 * 1000 // 5 minutes from now
       }
     }));
 
@@ -418,6 +429,7 @@ router.get('/profile/:csufEmail', async (req, res) => {
     // Remove sensitive data
     delete user.password;
     delete user.verificationCode;
+    delete user.verificationCodeExpiry;
     delete user.passwordResetCode;
     delete user.resetCodeExpiry;
 
