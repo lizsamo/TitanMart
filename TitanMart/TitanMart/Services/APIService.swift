@@ -222,6 +222,16 @@ class APIService {
     }
 
     // MARK: - Reviews
+    struct CanReviewResponse: Decodable {
+        let canReview: Bool
+        let reason: String?
+    }
+
+    func canReview(orderId: String, reviewedUserId: String, token: String) async throws -> CanReviewResponse {
+        let encodedReviewedUserId = reviewedUserId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? reviewedUserId
+        return try await request(endpoint: "/reviews/can-review/\(orderId)/\(encodedReviewedUserId)", token: token)
+    }
+
     func createReview(_ review: Review, token: String) async throws -> Review {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -230,7 +240,12 @@ class APIService {
     }
 
     func fetchReviews(userId: String) async throws -> [Review] {
-        return try await request(endpoint: "/reviews/user/\(userId)")
+        let encodedUserId = userId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? userId
+        return try await request(endpoint: "/reviews/user/\(encodedUserId)")
+    }
+
+    func fetchOrderReviews(orderId: String, token: String) async throws -> [Review] {
+        return try await request(endpoint: "/reviews/order/\(orderId)", token: token)
     }
 
     // MARK: - Payment

@@ -2,55 +2,51 @@
 //  MyListingsView.swift
 //  TitanMart
 //
-//  Created by Elizsa Montoya on 10/24/25.
+//  View to display seller's product listings with order information
 //
 
 import SwiftUI
 
 struct MyListingsView: View {
     @StateObject private var productViewModel = ProductViewModel()
+    @StateObject private var orderViewModel = OrderViewModel()
     @StateObject private var authService = AuthService.shared
     @State private var isLoading = true
     @State private var myProducts: [Product] = []
-    @State private var debugInfo = ""
+    @State private var selectedOrderForReview: Order?
 
     var body: some View {
-        List {
+        Group {
             if isLoading {
                 ProgressView()
-                    .frame(maxWidth: .infinity, alignment: .center)
             } else if myProducts.isEmpty {
-                VStack(spacing: 10) {
+                VStack(spacing: 15) {
                     Image(systemName: "tray")
-                        .font(.system(size: 50))
+                        .font(.largeTitle)
                         .foregroundColor(.gray)
                     Text("No listings yet")
-                        .foregroundColor(.secondary)
+                        .font(.headline)
+                        .foregroundColor(.gray)
                     Text("Start selling by listing an item!")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                    if !debugInfo.isEmpty {
-                        Text(debugInfo)
-                            .font(.caption2)
-                            .foregroundColor(.red)
-                            .padding()
-                    }
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding()
             } else {
-                ForEach(myProducts) { product in
-                    NavigationLink(destination: ProductDetailView(product: product)) {
-                        MyListingRowView(product: product)
+                ScrollView {
+                    LazyVStack(spacing: 12) {
+                        ForEach(myProducts) { product in
+                            ProductListingCard(
+                                product: product,
+                                order: findOrderForProduct(product),
+                                onReviewTapped: { order in
+                                    selectedOrderForReview = order
+                                }
+                            )
+                            .environmentObject(orderViewModel)
+                        }
                     }
+                    .padding()
                 }
-            }
-
-            if let error = productViewModel.errorMessage {
-                Text("Error: \(error)")
-                    .foregroundColor(.red)
-                    .font(.caption)
             }
         }
         .navigationTitle("My Listings")
@@ -60,125 +56,257 @@ struct MyListingsView: View {
         .refreshable {
             await loadMyListings()
         }
+        .sheet(item: $selectedOrderForReview) { order in
+            ListingReviewSheetView(order: order)
+        }
     }
 
     private func loadMyListings() async {
         guard let currentUser = authService.currentUser else {
-            debugInfo = "No user logged in"
             return
         }
 
         isLoading = true
-        await productViewModel.fetchProducts()
 
-        let allProductsCount = productViewModel.products.count
+        // Fetch products and orders in parallel
+        async let productsTask = productViewModel.fetchProducts()
+        async let ordersTask = orderViewModel.fetchOrders()
+
+        await productsTask
+        await ordersTask
 
         // Filter products by current user's sellerId
         myProducts = productViewModel.products.filter { product in
             product.sellerId == currentUser.id
         }
 
-        debugInfo = "User ID: \(currentUser.id.prefix(8))...\nTotal products: \(allProductsCount)\nYour products: \(myProducts.count)"
-
-        print("DEBUG - Current User ID: \(currentUser.id)")
-        print("DEBUG - Total Products Fetched: \(allProductsCount)")
-        print("DEBUG - My Products Count: \(myProducts.count)")
-        productViewModel.products.forEach { product in
-            print("  Product: \(product.title) - Seller ID: \(product.sellerId)")
-        }
+        // Sort by creation date, newest first
+        myProducts.sort { $0.createdAt > $1.createdAt }
 
         isLoading = false
     }
+
+    private func findOrderForProduct(_ product: Product) -> Order? {
+        // Find any order that contains this product
+        return orderViewModel.orders.first { order in
+            order.items.contains { item in
+                item.product.id == product.id
+            }
+        }
+    }
 }
 
-struct MyListingRowView: View {
+struct ProductListingCard: View {
     let product: Product
+    let order: Order?
+    let onReviewTapped: (Order) -> Void
+
+    @EnvironmentObject var viewModel: OrderViewModel
+    @State private var canReview = false
+    @State private var reviewReason: String?
 
     var body: some View {
-        HStack(spacing: 12) {
-            // Product Image
-            if let firstImageURL = product.imageURLs.first,
-               let url = URL(string: firstImageURL) {
-                AsyncImage(url: url, transaction: Transaction(animation: .default)) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 80, height: 80)
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .cornerRadius(8)
-                            .clipped()
-                    case .failure(let error):
-                        Image(systemName: "photo")
-                            .font(.largeTitle)
+        VStack(alignment: .leading, spacing: 12) {
+            // Product Header
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(product.title)
+                        .font(.headline)
+
+                    if let order = order {
+                        Text(order.createdAt.formatted(date: .abbreviated, time: .shortened))
+                            .font(.caption)
                             .foregroundColor(.gray)
-                            .frame(width: 80, height: 80)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                            .onAppear {
-                                print("❌ Image failed to load for \(product.title)")
-                                print("   URL: \(firstImageURL)")
-                                print("   Error: \(error)")
-                            }
-                    @unknown default:
-                        EmptyView()
+                    } else {
+                        Text("Listed on \(product.createdAt.formatted(date: .abbreviated, time: .omitted))")
+                            .font(.caption)
+                            .foregroundColor(.gray)
                     }
                 }
-                .onAppear {
-                    print("🖼️ Loading image for \(product.title): \(firstImageURL)")
+
+                Spacer()
+
+                if let order = order {
+                    StatusBadge(status: order.status)
+                } else {
+                    Text(product.isAvailable ? "Available" : "Unavailable")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(product.isAvailable ? Color.green : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
-            } else {
-                Image(systemName: "photo")
-                    .font(.largeTitle)
-                    .foregroundColor(.gray)
-                    .frame(width: 80, height: 80)
-                    .onAppear {
-                        print("⚠️ No image URL for \(product.title), imageURLs: \(product.imageURLs)")
-                    }
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
             }
 
-            // Product Info
-            VStack(alignment: .leading, spacing: 4) {
-                Text(product.title)
-                    .font(.headline)
-                    .lineLimit(2)
+            // Product Image and Details
+            HStack(spacing: 10) {
+                if let imageURL = product.imageURLs.first,
+                   let url = URL(string: imageURL) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } placeholder: {
+                        Color.gray.opacity(0.3)
+                    }
+                    .frame(width: 50, height: 50)
+                    .cornerRadius(8)
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 4) {
+                        Text(product.condition.rawValue)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+
+                        if let order = order {
+                            Text("•")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+
+                            Text("Sold")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+
+                    Text(product.category.rawValue)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+
+                Spacer()
 
                 Text("$\(product.price, specifier: "%.2f")")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(.titanOrange)
-
-                HStack {
-                    Text(product.condition.rawValue)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                    Text("•")
-                        .foregroundColor(.secondary)
-
-                    Text(product.isAvailable ? "Available" : "Sold")
-                        .font(.caption)
-                        .foregroundColor(product.isAvailable ? .success : .secondary)
-                }
             }
 
-            Spacer()
+            // Order Information (if sold)
+            if let order = order {
+                Divider()
 
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                HStack {
+                    if let buyerName = order.buyerName {
+                        Text("Buyer: \(buyerName)")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+
+                    Spacer()
+
+                    if let orderTotal = order.items.first(where: { $0.product.id == product.id })?.totalPrice {
+                        Text("Total: $\(orderTotal, specifier: "%.2f")")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                }
+
+                // Review Button (only for completed orders)
+                if order.status == .completed {
+                    Button(action: {
+                        onReviewTapped(order)
+                    }) {
+                        HStack {
+                            Image(systemName: "star.fill")
+                            Text("Leave Review for Buyer")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                    }
+                    .buttonStyle(.plain)
+                    .task {
+                        await checkReviewEligibility(for: order)
+                    }
+                    .disabled(!canReview)
+                    .opacity(canReview ? 1.0 : 0.5)
+                }
+
+                if let reason = reviewReason, !canReview {
+                    Text(reason)
+                        .font(.caption)
+                        .foregroundColor(.orange)
+                }
+            }
         }
-        .padding(.vertical, 8)
+        .padding()
+        .background(Color(UIColor.systemBackground))
+        .cornerRadius(12)
+        .shadow(radius: 2)
+    }
+
+    private func checkReviewEligibility(for order: Order) async {
+        guard let otherPartyId = viewModel.getOtherPartyUserId(for: order) else {
+            return
+        }
+
+        let result = await viewModel.canReview(orderId: order.id, reviewedUserId: otherPartyId)
+        await MainActor.run {
+            canReview = result.canReview
+            reviewReason = result.reason
+        }
+    }
+}
+
+struct ListingReviewSheetView: View {
+    let order: Order
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var reviewedUser: User?
+    @State private var isLoading = true
+    @State private var errorMessage: String?
+
+    var body: some View {
+        Group {
+            if isLoading {
+                ProgressView("Loading...")
+            } else if let error = errorMessage {
+                VStack(spacing: 15) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.largeTitle)
+                        .foregroundColor(.orange)
+                    Text(error)
+                        .foregroundColor(.gray)
+                    Button("Close") {
+                        dismiss()
+                    }
+                    .buttonStyle(.bordered)
+                }
+                .padding()
+            } else if let user = reviewedUser {
+                LeaveReviewView(order: order, reviewedUser: user)
+            }
+        }
+        .task {
+            await loadReviewedUser()
+        }
+    }
+
+    private func loadReviewedUser() async {
+        let buyerId = order.buyerId
+
+        do {
+            let user = try await APIService.shared.getUserProfile(csufEmail: buyerId)
+            await MainActor.run {
+                reviewedUser = user
+                isLoading = false
+            }
+        } catch {
+            await MainActor.run {
+                errorMessage = "Failed to load buyer profile"
+                isLoading = false
+            }
+        }
     }
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         MyListingsView()
     }
 }

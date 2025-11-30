@@ -14,7 +14,7 @@ struct Review: Identifiable, Codable {
     var reviewerId: String
     var reviewerName: String
     var reviewedUserId: String
-    var productId: String?
+    var orderId: String
     var createdAt: Date
 
     init(id: String = UUID().uuidString,
@@ -23,7 +23,7 @@ struct Review: Identifiable, Codable {
          reviewerId: String,
          reviewerName: String,
          reviewedUserId: String,
-         productId: String? = nil,
+         orderId: String,
          createdAt: Date = Date()) {
         self.id = id
         self.rating = max(1, min(5, rating)) // Ensure rating is between 1-5
@@ -31,7 +31,7 @@ struct Review: Identifiable, Codable {
         self.reviewerId = reviewerId
         self.reviewerName = reviewerName
         self.reviewedUserId = reviewedUserId
-        self.productId = productId
+        self.orderId = orderId
         self.createdAt = createdAt
     }
 }

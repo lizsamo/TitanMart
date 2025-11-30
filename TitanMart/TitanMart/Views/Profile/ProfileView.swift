@@ -112,19 +112,25 @@ struct ProfileView: View {
                                 .background(user.isEmailVerified ? Color.success.opacity(0.1) : Color.warning.opacity(0.1))
                                 .cornerRadius(20)
 
-                                // Rating
-                                HStack(spacing: Spacing.xs) {
-                                    ForEach(0..<5) { index in
-                                        Image(systemName: index < Int(user.rating.rounded()) ? "star.fill" : "star")
-                                            .foregroundColor(.orange)
+                                // Rating (tappable to view reviews)
+                                NavigationLink(destination: UserReviewsView(user: user)) {
+                                    HStack(spacing: Spacing.xs) {
+                                        ForEach(0..<5) { index in
+                                            Image(systemName: index < Int(user.rating.rounded()) ? "star.fill" : "star")
+                                                .foregroundColor(.orange)
+                                                .font(.caption)
+                                        }
+                                        Text(String(format: "%.1f", user.rating))
+                                            .font(.bodyText)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.primary)
+                                        Text("(\(user.totalRatings))")
                                             .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        Image(systemName: "chevron.right")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
                                     }
-                                    Text(String(format: "%.1f", user.rating))
-                                        .font(.bodyText)
-                                        .fontWeight(.semibold)
-                                    Text("(\(user.totalRatings))")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
                                 }
                             }
                         }
@@ -140,7 +146,7 @@ struct ProfileView: View {
                                 icon: "bag.fill",
                                 title: "My Orders",
                                 iconColor: .titanOrange,
-                                destination: AnyView(OrdersListView())
+                                destination: AnyView(OrderHistoryView())
                             )
 
                             Divider().padding(.leading, 60)
