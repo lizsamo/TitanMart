@@ -1,12 +1,10 @@
 # TitanMart Testing Guide
 
-## 🚀 Quick Start Testing (Recommended)
-
-### Step 1: Add Files to Xcode Project (IMPORTANT - Do This First!)
+### Step 1: Add Files to Xcode Project 
 
 The Swift files have been created, but need to be added to your Xcode project.
 
-**Method A: Using Xcode (Easiest)**
+**Method A: Using Xcode**
 
 1. Open the project:
    ```bash
@@ -70,14 +68,14 @@ The Swift files have been created, but need to be added to your Xcode project.
 
 **What You Can Test Right Now (No Backend Needed):**
 
-#### A. Product Browsing ✅
+#### A. Product Browsing 
 1. App launches → You'll see the Browse tab with mock products
 2. Scroll through the product list
 3. Tap on any product to see details
 4. Use the search bar to search for products
 5. Tap the filter icon to filter by category
 
-#### B. Shopping Cart ✅
+#### B. Shopping Cart
 1. Tap on a product
 2. Click "Add to Cart"
 3. Tap the Cart tab (should show badge with item count)
@@ -86,19 +84,19 @@ The Swift files have been created, but need to be added to your Xcode project.
 6. Remove items
 7. Click "Proceed to Checkout"
 
-#### C. Checkout Flow ✅
+#### C. Checkout Flow
 1. From cart, click "Proceed to Checkout"
 2. View order summary
 3. Enter pickup location
 4. See payment information
 5. Click "Place Order"
 
-#### D. Profile Section ✅
+#### D. Profile Section
 1. Tap the Profile tab
 2. See mock user profile
 3. Browse through "My Orders", "My Listings", etc.
 
-**What Won't Work Yet (Requires Backend):**
+**What Won't Work Yet:**
 - Login/Signup (you'll see the screens but can't authenticate)
 - Creating real orders
 - Adding new products
@@ -106,9 +104,9 @@ The Swift files have been created, but need to be added to your Xcode project.
 
 ---
 
-## 🔧 Option 2: Test with Local Backend (30 minutes)
+## 🔧 Option 2: Test with Local Backend
 
-Want full functionality? Set up the backend locally!
+Set up the backend locally!
 
 ### Step 1: Install Backend Dependencies
 
@@ -180,7 +178,7 @@ curl http://localhost:3000/health
 
 ---
 
-## 🌩️ Option 3: Full AWS Deployment (1 hour)
+## Option 3: Full AWS Deployment
 
 For complete functionality with cloud infrastructure.
 
@@ -247,11 +245,11 @@ Copy this URL!
 2. Update: `private let baseURL = "https://abc123.execute-api.us-west-2.amazonaws.com/dev"`
 3. Rebuild app
 
-Now everything should work! 🎉
+Now everything should work!
 
 ---
 
-## 🐛 Common Issues and Solutions
+## Common Issues and Solutions
 
 ### Issue 1: Xcode Build Errors
 
@@ -336,7 +334,7 @@ nvm use 18
 
 ---
 
-## 📊 What to Test in Each Section
+## What to Test in Each Section
 
 ### Authentication Flow (Requires Backend)
 - [ ] Click "Sign Up"
@@ -381,58 +379,7 @@ nvm use 18
 
 ---
 
-## 🎯 Testing Checklist for Your Professor
-
-Use this for your demo/presentation:
-
-### Demo Flow (10 minutes)
-1. **Introduction** (1 min)
-   - Show Xcode project structure
-   - Explain MVVM architecture
-
-2. **App Walkthrough** (4 min)
-   - Launch app
-   - Browse products
-   - Search and filter
-   - Add to cart
-   - Checkout flow
-   - Profile section
-
-3. **Code Review** (3 min)
-   - Show `Product.swift` model
-   - Show `ProductViewModel.swift` logic
-   - Show `APIService.swift` API integration
-
-4. **Backend** (2 min)
-   - Show `server.js`
-   - Show `serverless.yml`
-   - Explain AWS services used
-
-5. **Security** (2 min)
-   - CSUF email validation
-   - JWT authentication
-   - IAM policies
-   - Encryption
-
----
-
-## 🔍 Testing Screenshots to Capture
-
-For your report/presentation:
-1. Product browsing screen
-2. Product detail screen
-3. Shopping cart with items
-4. Checkout screen
-5. User profile
-6. Login/signup screens
-7. Search results
-8. Category filter
-
-To take screenshots in simulator: `Cmd + S`
-
----
-
-## 📱 Recommended Test Devices
+## Recommended Test Devices
 
 **Best for demo**:
 - iPhone 15 Pro (iOS 17)
@@ -444,41 +391,12 @@ To take screenshots in simulator: `Cmd + S`
 
 ---
 
-## 🎓 What This Demonstrates for CPSC 454
 
-### iOS Development ✅
-- Modern Swift/SwiftUI
-- MVVM architecture
-- Navigation and state management
 
-### Cloud Computing ✅
-- Serverless architecture (Lambda)
-- NoSQL database (DynamoDB)
-- Object storage (S3)
-- API Gateway
-
-### Security ✅
-- Authentication/Authorization
-- Email verification
-- IAM policies
-- Encryption at rest
-- Secure payment processing
-
-### Software Engineering ✅
-- Code organization
-- API design
-- Error handling
-- Documentation
-
----
-
-## Need Help?
+## Help?
 
 1. **Can't build in Xcode?** → Make sure files are added to project
 2. **Backend won't start?** → Run `npm install` first
 3. **AWS deployment fails?** → Check AWS credentials
 4. **App crashes?** → Check Xcode console for errors
 
-The app WILL WORK with mock data even if you don't set up the backend! Just test the UI and flow.
-
-Good luck! 🚀

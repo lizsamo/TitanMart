@@ -144,6 +144,22 @@ class APIService {
         return try await request(endpoint: "/auth/verify-email", method: "POST", body: jsonData)
     }
 
+    func resendVerificationCode(csufEmail: String) async throws -> String {
+        struct ResendResponse: Decodable {
+            let message: String
+        }
+
+        let body = ["csufEmail": csufEmail]
+        let jsonData = try JSONEncoder().encode(body)
+        let response: ResendResponse = try await request(endpoint: "/auth/resend-verification", method: "POST", body: jsonData)
+        return response.message
+    }
+
+    func getUserProfile(csufEmail: String) async throws -> User {
+        let encodedEmail = csufEmail.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? csufEmail
+        return try await request(endpoint: "/auth/profile/\(encodedEmail)")
+    }
+
     func forgotPassword(username: String) async throws -> String {
         struct ForgotPasswordResponse: Decodable {
             let message: String
@@ -206,6 +222,16 @@ class APIService {
     }
 
     // MARK: - Reviews
+    struct CanReviewResponse: Decodable {
+        let canReview: Bool
+        let reason: String?
+    }
+
+    func canReview(orderId: String, reviewedUserId: String, token: String) async throws -> CanReviewResponse {
+        let encodedReviewedUserId = reviewedUserId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? reviewedUserId
+        return try await request(endpoint: "/reviews/can-review/\(orderId)/\(encodedReviewedUserId)", token: token)
+    }
+
     func createReview(_ review: Review, token: String) async throws -> Review {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -214,7 +240,12 @@ class APIService {
     }
 
     func fetchReviews(userId: String) async throws -> [Review] {
-        return try await request(endpoint: "/reviews/user/\(userId)")
+        let encodedUserId = userId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? userId
+        return try await request(endpoint: "/reviews/user/\(encodedUserId)")
+    }
+
+    func fetchOrderReviews(orderId: String, token: String) async throws -> [Review] {
+        return try await request(endpoint: "/reviews/order/\(orderId)", token: token)
     }
 
     // MARK: - Payment
