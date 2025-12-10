@@ -42,7 +42,7 @@ class APIService {
 
     private init() {}
 
-    // MARK: - Generic Request Method
+    // Request Method
     func request<T: Decodable>(
         endpoint: String,
         method: String = "GET",
@@ -114,7 +114,7 @@ class APIService {
         }
     }
 
-    // MARK: - Authentication
+    // Authentication
     func register(username: String, password: String, csufEmail: String, fullName: String) async throws -> User {
         let body = [
             "username": username,
@@ -183,7 +183,7 @@ class APIService {
         return response.message
     }
 
-    // MARK: - Products
+    // Products
     func fetchProducts(category: ProductCategory? = nil, searchQuery: String? = nil) async throws -> [Product] {
         var endpoint = "/products"
         var queryItems: [String] = []
@@ -209,7 +209,7 @@ class APIService {
         return try await request(endpoint: "/products", method: "POST", body: jsonData, token: token)
     }
 
-    // MARK: - Orders
+    // Orders
     func createOrder(_ order: Order, token: String) async throws -> Order {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -221,7 +221,7 @@ class APIService {
         return try await request(endpoint: "/orders/user/\(userId)", token: token)
     }
 
-    // MARK: - Reviews
+    // Reviews
     struct CanReviewResponse: Decodable {
         let canReview: Bool
         let reason: String?
@@ -248,7 +248,7 @@ class APIService {
         return try await request(endpoint: "/reviews/order/\(orderId)", token: token)
     }
 
-    // MARK: - Payment
+    // Payment
     func createPaymentIntent(amount: Double, orderId: String, token: String) async throws -> String {
         let body = ["amount": amount, "orderId": orderId] as [String : Any]
         let jsonData = try JSONSerialization.data(withJSONObject: body)
@@ -259,7 +259,7 @@ class APIService {
         return clientSecret
     }
 
-    // MARK: - Image Upload
+    // Image Upload
     func uploadImages(_ images: [UIImage], token: String) async throws -> [String] {
         guard let url = URL(string: "\(baseURL)/upload/images") else {
             throw APIError.invalidURL
@@ -322,7 +322,7 @@ class APIService {
     }
 }
 
-// MARK: - UIImage Extension for Image Resizing
+// UIImage Extension for Image Resizing
 extension UIImage {
     func resizeImage(maxDimension: CGFloat) -> UIImage? {
         let size = self.size

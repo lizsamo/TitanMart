@@ -14,7 +14,7 @@ struct TitanMartApp: App {
     @StateObject private var cartService = CartService.shared
 
     // TEMPORARY: Set to true to skip login and test app with mock data
-    let skipLoginForDemo = true
+    let skipLoginForDemo = false
 
     init() {
         // Configure Stripe with publishable key
